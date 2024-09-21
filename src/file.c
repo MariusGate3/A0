@@ -16,7 +16,7 @@ const char * const FILE_TYPE_STRINGS[] = { // Array with string's for file types
   "empty",
   "ASCII text",
   "ISO-8859 text",
-  "UTF-8 Unicode text"
+  "UTF-8 text"
 };
 
 int print_error(char *path, int errnum) {
@@ -45,8 +45,38 @@ int is_iso(unsigned char *buffer, size_t length) {
       (byte >= 0x20 && byte <= 0x7E) ||
       (byte >= 0x07 && byte <= 0x0D) ||
       byte == 0x1B ||
-      (byte >= 0xA0 && byte <= 0xFF)
+      (byte >= 0xA0)
     )) {
+      return 0;
+    }
+  }
+  return 1;
+}
+
+int is_utf(unsigned char *buffer, size_t length) {
+  size_t byte_len = 0;
+  for (size_t i = 0; i < length; i++) {
+    unsigned char byte = buffer[i];
+
+    if (byte_len > 0 ) {
+      // check efterfølgende bytes:
+      if ((byte & 0xC0) == 0x80) {
+        byte_len--;
+        continue;
+      }
+      return 0;
+    }
+
+    // 0x80 = 10000000 og derfor vil dette kun returnere 0 hvis den første bit er 0.
+    if ((byte & 0x80) == 0) {
+        byte_len = 0;
+    } else if ((byte & 0xE0) == 0xC0) {
+        byte_len = 1;
+    } else if ((byte & 0xF0) == 0xE0) {
+        byte_len = 2;
+    } else if ((byte & 0xF8) == 0xF0) {
+       byte_len = 3;
+    } else {
       return 0;
     }
   }
@@ -68,7 +98,7 @@ int main(int argc, char *argv[]) {
 
   fseek(file,0,SEEK_END); // Move pointer to end of the file
   long file_size = ftell(file); // Check size of file
-  fseek(file,0,SEEK_SET) // Set pointer back to start
+  fseek(file,0,SEEK_SET); // Set pointer back to start
 
   if (file_size == 0) { // If size of file is 0, it is empty
     result_file_type = EMPTY; // Set result file type to empty file
@@ -87,13 +117,13 @@ int main(int argc, char *argv[]) {
   fread(buffer,1,file_size,file);
   fclose(file);
 
-  if(is_utf) {
-    result_file_type = UTF;
-  } else if (is_ascii(buffer, file_size)) {
+  if(is_ascii(buffer, file_size)) {
     result_file_type = ASCII;
   } else if (is_iso(buffer, file_size)) {
     result_file_type = ISO;
-  } else {
+  } else if (is_utf(buffer, file_size)) {
+    result_file_type = UTF;}
+    else {
     result_file_type = DATA;
   }
 
