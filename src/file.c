@@ -127,10 +127,10 @@ int main(int argc, char *argv[]) {
 
   if(is_ascii(buffer, file_size)) {
     result_file_type = ASCII;
-  } else if (is_iso(buffer, file_size)) {
-    result_file_type = ISO;
   } else if (is_utf(buffer, file_size)) {
     result_file_type = UTF;
+  } else if (is_iso(buffer, file_size)) {
+    result_file_type = ISO;
   } else {
     result_file_type = DATA;
   }
