@@ -17,6 +17,8 @@ printf "Hello, World!" > test_files/ascii2.input
 printf "Hello,\x00World!\n" > test_files/data.input
 printf "" > test_files/empty.input
 printf "😅" > test_files/utf8.input
+printf "Jeg spiste 5 \xE6bler\n" > test_files/iso.input
+
 ### TODO: Generate more test files ###
 
 

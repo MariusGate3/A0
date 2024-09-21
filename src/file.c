@@ -41,6 +41,10 @@ int is_ascii(unsigned char *buffer, size_t length) {
 int is_iso(unsigned char *buffer, size_t length) {
   for (size_t i = 0; i < length; i++) {
     unsigned char byte = buffer[i];
+
+    if (byte == 0x00) {
+      return 0;
+    }
     if (!(
       (byte >= 0x20 && byte <= 0x7E) ||
       (byte >= 0x07 && byte <= 0x0D) ||
