@@ -57,6 +57,10 @@ int is_utf(unsigned char *buffer, size_t length) {
   size_t byte_len = 0;
   for (size_t i = 0; i < length; i++) {
     unsigned char byte = buffer[i];
+    
+    if (byte == 0x00) {
+      return 0;
+    }
 
     if (byte_len > 0 ) {
       // check efterfølgende bytes:
@@ -122,8 +126,8 @@ int main(int argc, char *argv[]) {
   } else if (is_iso(buffer, file_size)) {
     result_file_type = ISO;
   } else if (is_utf(buffer, file_size)) {
-    result_file_type = UTF;}
-    else {
+    result_file_type = UTF;
+  } else {
     result_file_type = DATA;
   }
 

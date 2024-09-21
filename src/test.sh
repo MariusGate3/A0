@@ -27,6 +27,7 @@ do
   echo ">>> Testing ${f}.."
   file    ${f} | sed -e 's/ASCII text.*/ASCII text/' \
                          -e 's/UTF-8 Unicode text.*/UTF-8 Unicode text/' \
+                         -e 's/Unicode text, UTF-8 text.*/UTF-8 text/' \
                          -e 's/ISO-8859 text.*/ISO-8859 text/' \
                          -e 's/writable, regular file, no read permission/cannot determine (Permission denied)/' \
                          > "${f}.expected"
