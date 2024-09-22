@@ -36,8 +36,9 @@ printf "Det var godt nok sjovt 🤣" > test_files/utf8-3.input
 
 printf "Jeg kan godt lide k\x61ge" > test_files/utf8-4.input
 printf "J'aime le caf\xC3\xA9" > test_files/utf8-5.input
-printf "日本語は美しい言語です。" > test_files/utf8-6.input
-printf "Jawzzzzz 🦈" > test_files/utf8-7.input
+printf "ポケモン" > test_files/utf8-6.input
+printf "\xE3\x83\x9D\xE3\x82\xB1\xE3\x83\xA2\xE3\x83\xB3\n" > test_files/utf8-7.input
+printf "Jawzzzzz 🦈" > test_files/utf8-8.input
 
 
 # DATA TESTS #
