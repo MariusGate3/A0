@@ -19,17 +19,26 @@ printf "" > test_files/empty.input
 printf "Hello, World!\n" > test_files/ascii.input
 printf "Hello, World!" > test_files/ascii2.input
 printf "  Hello, World!" > test_files/ascii3.input
-printf "12345678910/!)" > test_files/ascii4.input
+printf "hemmelighed" > test_files/ascii4.input
+chmod -r test_files/ascii4.input
 
 # ISO TESTS
 printf "Jeg spiste 5 \xE6bler\n" > test_files/iso.input
-printf "Hvussu gongur ta\0xF0?" > test_files/iso2.input
-printf "\0xDEakka \0xFE \0xE9r" > test_files/iso3.input
-
+printf "Hvussu gongur ta\xF0?" > test_files/iso2.input
+printf "\xDEakka \xFE \xE9r" > test_files/iso3.input
+printf "I\xA0love cake" > test_files/iso4.input
+printf "House of Cro\xFF" > test_files/iso5.input
 
 # UTF-8 TESTS
 printf "😅" > test_files/utf8.input
 printf "Hvussu gongur tað?" > test_files/utf8-2.input
+printf "Det var godt nok sjovt 🤣" > test_files/utf8-3.input
+
+printf "Jeg kan godt lide k\x61ge" > test_files/utf8-4.input
+printf "J'aime le caf\xC3\xA9" > test_files/utf8-5.input
+printf "日本語は美しい言語です。" > test_files/utf8-6.input
+printf "Jawzzzzz 🦈" > test_files/utf8-7.input
+
 
 # DATA TESTS #
 printf "Hello,\x00World!\n" > test_files/data.input

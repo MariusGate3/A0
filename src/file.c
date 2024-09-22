@@ -134,7 +134,7 @@ int main(int argc, char *argv[]) {
   } else {
     result_file_type = DATA;
   }
-
+  free(buffer);
   printf("%s: %s\n", argv[1], FILE_TYPE_STRINGS[result_file_type]);
   return EXIT_SUCCESS;
 }
